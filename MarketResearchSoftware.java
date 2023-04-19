@@ -1,3 +1,7 @@
+
+
+import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 class MarketResearchSoftware
@@ -14,9 +18,10 @@ class MarketResearchSoftware
         while(loginobj.logged_in) //that user can do whatever he is allowed to as long as they are logged in
         {
             //switch case -> for each type of user diff interface
-            user.viewReport("null");
-            user.viewAllReviews();
-            loginobj.logout();
+            Product p = new Product("name", "mobile", "alshdg", "Samsung", "alskbf");
+            System.out.println("CP1");
+            user.generateReport(p);
+            user.checkCatalogue();
         }
 
         sc.close();
@@ -37,7 +42,7 @@ class Login
         //connect to user database and verify details
         System.out.println("Logged in");
         this.logged_in = true;
-        User user = new CompanyExec("username", "password", "company", 0, Role.CompanyExecutive);
+        User user = new MarketResearcher("username", "password", "company", 0, Role.MarketResearcher);
         // output a user object
         return user;
     }
@@ -84,7 +89,7 @@ class User
         errorMsg();
     }
 
-    void generateReport() //ideally return a downloadable report that is then pushed to a database
+    void generateReport(Product p) //ideally return a downloadable report that is then pushed to a database
     {
         errorMsg();
     }
@@ -260,8 +265,13 @@ class MarketResearcher extends User
     }
 
     @Override
-    void generateReport() //ideally return a downloadable report that is then pushed to a database
+    void generateReport(Product p) //ideally return a downloadable report that is then pushed to a database
     {
+        //switch case -> what type of report would you like
+        //also stats and visuals?
+        System.out.println("CP2");
+        ReportGeneratorFacade.generateReport(ReportType.HTML, null, p);
+        //ReportGeneratorFacade.generateReport(ReportType.PDF, null);
         //Use something similar to facade example, facade pattern, option of HTML, pdf report
         // Builder pattern for adding stats and then visualizations?
     }
@@ -306,8 +316,177 @@ class MarketResearcher extends User
 
 }
 
-// Other classes that can possibly be added - a class each for Catalogue, Email, Review, Survey to ensure single responsibility principle is maintained.
+class Product
+{
+    String name;
+    String type;
+    String pID;
+    String company;
+    String cID;
+
+    Product(String name, String type, String pID, String company, String cID)
+    {
+        this.name = name;
+        this.type = type;
+        this.pID = pID;
+        this.company = company;
+        this.cID = cID;
+    }
+
+    void getProductDetails(String pID)
+    {
+        //connect to DB and retreive product info
+    }
+
+    void setProductDetails(String pID)
+    {
+        // edit db
+    }
+
+    Product getProduct(String pID)
+    {
+        return this;
+    }
+    
+}
+
+class Catalogue
+{
+    // Reference to refer to list of books.
+    List<Product> products;
+ 
+    // Constructor of this class
+    Catalogue(List<Product> prod)
+    {
+        //connect to db and get products of this company
+        // This keyword refers to current instance itself
+        this.products = prod;
+    }
+
+    public List<Product> getCatalogue()
+    {
+        return products;
+    }
+
+    void addItem(Product p)
+    {
+        this.products.add(p);
+    }
+
+    //Function to edit a certain product
+    //Function to view more details of a certain product given pID 
+}
+
+//Email Handler class -> to view/edit email database (Similar to catalogue?) ; Send emails (retreive email for product -> send)
+//Review class -> add review
+//SUrvey class
+
+
+// Other classes that can possibly be added - a class each for Product, Catalogue, Email, Review, Survey to ensure single responsibility principle is maintained.
 // Facade pattern, Builder pattern, prototype pattern for Survey
 //MVC arch. ----idk how rn
 // DAO/Proxy pattern for auth. using access level?
 
+class ReportGenerator 
+{
+ 
+    private String header;
+    private String data;
+    private String footer;
+     
+    public String getHeader() 
+    {
+      return header;
+    }
+    public void setHeader(String header) 
+    {
+      System.out.println("Setting report header");
+      this.header = header;
+    }
+    public String getData() 
+    {
+      return data;
+    }
+    public void setData(String data) 
+    {
+      System.out.println("Setting report data");
+      this.data = data;
+    }
+    public String getFooter() 
+    {
+      return footer;
+    }
+    public void setFooter(String footer) 
+    {
+      System.out.println("Setting report footer");
+      this.footer = footer;
+    }
+}
+
+enum ReportType 
+{
+    PDF, 
+    HTML
+}
+  
+class ReportWriter 
+{
+     
+    public void writeHtmlReport(ReportGenerator report, String location) 
+    {
+      System.out.println("HTML Report written");
+      System.out.println(report.getHeader());
+      System.out.println(report.getData());
+      System.out.println(report.getFooter());
+    }
+     
+    public void writePdfReport(ReportGenerator report, String location) 
+    {
+      System.out.println("Pdf Report written");
+      System.out.println(report.getHeader());
+      System.out.println(report.getData());
+      System.out.println(report.getFooter());
+    }
+}
+  
+   
+class ReportGeneratorFacade 
+{
+    public static void generateReport(ReportType type, String location, Product p) //throws Exception 
+    {
+      if(type == null) 
+      {
+        System.out.println("File type not specified");
+        //throw new Exception();
+      }
+
+      //Create report
+      ReportGenerator report = new ReportGenerator();
+ 
+      report.setHeader(p.name + " Report");
+      report.setFooter("Generated for " + p.company + " at time " + (new Date().toString()));
+       
+      //Get data from dataSource and set to String object
+       
+      String data = generateReportData();
+      report.setData(data);
+       
+      //Write report
+      ReportWriter writer = new ReportWriter();
+      switch(type) 
+      {
+        case HTML:
+          writer.writeHtmlReport(report, location);
+          break;
+           
+        case PDF:
+          writer.writePdfReport(report, location);
+          break;
+      }
+    }
+
+    static String generateReportData()
+    {
+        return "Data";
+    }
+  }
