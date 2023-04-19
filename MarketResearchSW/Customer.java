@@ -1,5 +1,6 @@
 package MarketResearchSW;
 
+//import java.util.List;
 
 class Customer extends User
 {
@@ -13,41 +14,39 @@ class Customer extends User
     }
 
     @Override
-    void fillSurvey(String surveyID)
+    void fillSurvey(String surveyID, String a1, String a2, String a3)
     {
-       //extract questions for this survey id from survey questions table
-       Survey survey = new Survey(surveyID);
-       //SOP(survey.getSurveyQ1())
-       //get customer answers
        SurveyFilled answers = new SurveyFilled(surveyID);
-       answers.fillAnswer1("answer1");
+       answers.fillAnswer1(a1);
+       answers.fillAnswer2(a2);
+       answers.fillAnswer3(a3);
        //put answers back in db
        answers.fillSurveyForm(this);
        //confirmation msg
+       System.out.println("Survey has been filled");
     }
 
     @Override
     void viewAvailableSurveys()
     {
-        //look up db
-        //display available surveys - ie. survey name, product/company
+        //Connect to database and then 
     }
 
     @Override
-    void checkCatalogue() //check if product in catalogue
+    void viewCatalogue() //check if product in catalogue
     {
         Catalogue catalogue = new Catalogue(this.company);
         //display available products ordered by company
-        //just have to print out from the catalogue list
+        //return catalogue.products;
     }
 
     @Override
-    void reviewProduct(String company, String product)
+    void reviewProduct(String company, String product, String productReview, int rating)
     {
         //get product id from product name and company
         String pID = Product.getProductID(product, company);
         //get review and rating from user
-        Review review = new Review(pID, "review", 3);
+        Review review = new Review(pID, productReview, rating);
         //put into db
         review.addReview(this);
         //get confirmation msg

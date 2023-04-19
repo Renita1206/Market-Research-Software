@@ -13,6 +13,11 @@ class Catalogue
         //connect to db and get products of this company and add to list
     }
 
+    Catalogue()
+    {
+        //catalogue of all products
+    }
+
     public List<Product> getCatalogue()
     {
         return products;
@@ -23,6 +28,6 @@ class Catalogue
         this.products.add(p);
     }
 
-    //Function to edit a certain product
-    //Function to view more details of a certain product given pID 
+    //Function to edit a certain product - use setProductDetails
+    
 }

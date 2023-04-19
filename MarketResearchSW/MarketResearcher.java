@@ -13,7 +13,7 @@ class MarketResearcher extends User
     }
 
     @Override
-    void viewCatalogue() //view all products assoc. to a company
+    void viewCompanyCatalogue() //view all products assoc. to a company
     {
         System.out.println("Here is the current catalogue of products for company " + this.company);
         //retrieve all related products from catalogue table
@@ -37,34 +37,39 @@ class MarketResearcher extends User
     }
 
     @Override
-    void generateReport(Product p) //ideally return a downloadable report that is then pushed to a database
+    void generateReport(Product p, ReportType type, String loc) //ideally return a downloadable report (that is then pushed to a database?)
     {
         //switch case -> what type of report would you like
-        ReportGeneratorFacade.generateReport(ReportType.HTML, null, p);
+        switch(type)
+        {
+            case PDF:  ReportGeneratorFacade.generateReport(ReportType.PDF, loc, p);
+                       break;
+            case HTML: ReportGeneratorFacade.generateReport(ReportType.HTML, loc, p);
+                       break;
+            default: System.out.println("Invalid input");
+
+        }
+
+        System.out.println("Report has been generated");
+        
     }
 
     @Override
-    void editCatalogue()
+    void addProduct(String name, String type, String pID, String company, String cID)
     {
-        // make changes to catalogue database
+        Product product = new Product(name, type, pID, company, cID);
+        product.addProduct();
     }
 
     @Override
-    void createSurvey()
+    void createSurvey(String pname, String cname, String q1, String q2, String q3)
     {
-        // add survey to db
-    }
-
-    @Override
-    void editEmailData()
-    {
-        // add email to db
-    }
-
-    @Override
-    void sendEmails()
-    {
-        // send out emails to addresses from db
+        Survey survey = new Survey(pname, cname);
+        survey.setSurveyQ1(q1);
+        survey.setSurveyQ2(q2);
+        survey.setSurveyQ3(q3);
+        // add survey to dbString surveyID;
+        survey.updateSurvey();
     }
 
     @Override
@@ -73,12 +78,4 @@ class MarketResearcher extends User
         //look up db
         //display available surveys - ie. survey name, product/company
     }
-
-    @Override
-    void checkCatalogue() //check if product in catalogue
-    {
-        //look up db
-        //display available products ordered by company
-    }
-
 }

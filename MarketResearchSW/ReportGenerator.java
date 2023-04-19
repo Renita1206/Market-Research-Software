@@ -1,6 +1,14 @@
 package MarketResearchSW;
 
 import java.util.Date;
+import java.io.FileOutputStream;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 class ReportGenerator 
 {
@@ -50,19 +58,66 @@ class ReportWriter
     public void writeHtmlReport(ReportGenerator report, String location) 
     {
       System.out.println("HTML Report written");
-      System.out.println(report.getHeader());
-      System.out.println(report.getData());
-      System.out.println(report.getFooter());
+      //System.out.println(report.getHeader());
+      //System.out.println(report.getData());
+      //System.out.println(report.getFooter());
+
       //put it all in a HTML file and download
+      File file = new File("output.html");
+        
+        try 
+        {
+            // Create a new PrintWriter object
+            PrintWriter writer = new PrintWriter(new FileWriter(file));
+            
+            // Write data to the HTML file
+            writer.println("<html>");
+            writer.println("<head><title>Report</title></head>");
+            writer.println("<body>");
+            writer.println("<h3>"+ report.getHeader() + "</h3>");
+            writer.println("<h5>"+ report.getData() + "</h5>");
+            writer.println("<h3>"+ report.getFooter() + "</h3>");
+            writer.println("</body>");
+            writer.println("</html>");
+            
+            // Close the PrintWriter
+            writer.close();
+            
+            System.out.println("HTML file created successfully.");
+        } 
+        catch (IOException e) 
+        {
+          System.out.println("Error");
+        }
+
     }
      
     public void writePdfReport(ReportGenerator report, String location) 
     {
       System.out.println("Pdf Report written");
-      System.out.println(report.getHeader());
-      System.out.println(report.getData());
-      System.out.println(report.getFooter());
-      //put it all in a pdf and download
+      //System.out.println(report.getHeader());
+      //System.out.println(report.getData());
+      //System.out.println(report.getFooter());
+      try 
+        {
+            // Create a PDF document object
+            Document document = new Document();
+            // Create a PDF writer to write data to the PDF document
+            PdfWriter.getInstance(document, new FileOutputStream("output.pdf"));
+            // Open the PDF document
+            document.open();
+            // Write data to the PDF document
+            document.add(new Paragraph(report.getHeader()));
+            document.add(new Paragraph(report.getData()));
+            document.add(new Paragraph(report.getFooter()));
+            // Close the PDF document
+            document.close();
+
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("Error");
+        }
     }
 }
   

@@ -1,5 +1,7 @@
 package MarketResearchSW;
 
+import java.util.List;
+
 enum Role
 {
     CompanyExecutive,
@@ -15,7 +17,7 @@ class User
     int accessLevel;
     Role role;
 
-    void viewCatalogue() //view all products assoc. to a company
+    void viewCompanyCatalogue() //view all products assoc. to a company
     {
         errorMsg();
     }
@@ -35,28 +37,28 @@ class User
         errorMsg();
     }
 
-    void generateReport(Product p) //ideally return a downloadable report that is then pushed to a database
+    void generateReport(Product p, ReportType type, String loc) //ideally return a downloadable report that is then pushed to a database
     {
         errorMsg();
     }
-    void editCatalogue()
+    void addProduct(String name, String type, String pID, String company, String cID)
     {
         errorMsg();
     }
-    void createSurvey()
+    void createSurvey(String pname, String cname, String q1, String q2, String q3)
     {
         errorMsg();
     }
-    void editEmailData()
+    /*void editEmailData()
     {
         errorMsg();
     }
     void sendEmails()
     {
         errorMsg();
-    }
+    }*/
 
-    void fillSurvey(String surveyID)
+    void fillSurvey(String surveyID, String a1, String a2, String a3)
     {
         errorMsg();
     }
@@ -64,11 +66,11 @@ class User
     {
         errorMsg();
     }
-    void checkCatalogue() //check if product in catalogue
+    void viewCatalogue() //check if product in catalogue
     {
         errorMsg();
     }
-    void reviewProduct(String company, String product)
+    void reviewProduct(String company, String product, String productReview, int rating)
     {
         errorMsg();
     }

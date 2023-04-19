@@ -11,7 +11,14 @@ class Survey
 
     Survey(String surveyID)
     {
-        //initialise all variables based on pID and cID after check db
+        //initialise all variables based on sID
+    }
+
+    Survey(String pname, String cname)
+    {
+        this.surveyID = pname+cname;
+        this.productName = pname;
+        this.companyName = cname;
     }
     
     String getSurveyQ1()

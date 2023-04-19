@@ -21,16 +21,16 @@ class Product
     {
         //connect to DB and retreive product info
     }
-
-    void setProductDetails(String pID)
-    {
-        // edit db
-    }
-
+    
     static String getProductID(String product, String company)
     {
         String pID = "asfg";
         //Crosscheck against database and init value
         return pID;
+    }
+
+    void addProduct()
+    {
+        //add this product to db
     }
 }
