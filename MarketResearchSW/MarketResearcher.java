@@ -1,5 +1,6 @@
 package MarketResearchSW;
 
+import java.sql.*;
 
 class MarketResearcher extends User
 {
@@ -13,15 +14,7 @@ class MarketResearcher extends User
     }
 
     @Override
-    void viewCompanyCatalogue() //view all products assoc. to a company
-    {
-        System.out.println("Here is the current catalogue of products for company " + this.company);
-        //retrieve all related products from catalogue table
-        //print everything
-    }
-
-    @Override
-    void viewReviews(String product) // view reviews pertaining to a product
+    ResultSet viewReviews(String product) // view reviews pertaining to a product
     {
         System.out.println("Report for product "  + product + "by company " + this.company);
         //retrieve all reviews for product from review table
@@ -29,7 +22,7 @@ class MarketResearcher extends User
     }
 
     @Override
-    void viewAllReviews() //view all reviews related to company
+    ResultSet viewAllReviews() //view all reviews related to company
     {
         System.out.println("Here are all the reviews for company " + this.company);
         //retrieve all related reviews from review table
@@ -57,7 +50,7 @@ class MarketResearcher extends User
     @Override
     void addProduct(String name, String type, String pID, String company, String cID)
     {
-        Product product = new Product(name, type, pID, company, cID);
+        Product product = new Product(name, type, pID, cID);
         product.addProduct();
     }
 
@@ -73,9 +66,42 @@ class MarketResearcher extends User
     }
 
     @Override
-    void viewAvailableSurveys()
+    ResultSet viewAvailableSurveys()
     {
-        //look up db
-        //display available surveys - ie. survey name, product/company
+        Connection connection = null;
+        ResultSet resultSet = null;
+        try 
+        {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/marketresearchsw",
+                "root", "");
+ 
+            Statement statement;
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(
+                "select * from survey;");
+
+            //System.out.println(resultSet);
+
+            if(!resultSet.next()) 
+            {
+                System.out.println("No Availably Surveys");
+            }
+
+            //System.out.println(resultSet.getString("ID").trim());
+
+            statement.close();
+            connection.close();
+            
+        }
+        catch(Exception e)
+        {
+            //something
+        }
+        
+        return resultSet;
+
     }
 }

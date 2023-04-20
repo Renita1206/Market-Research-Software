@@ -48,14 +48,56 @@ class Product
                 p = new Product(name, desc, pID, cID);
                 
             }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
         }
         catch(Exception e)
         {
             //something
         }
 
-        return p;
-        
+        return p; 
+    }
+
+    static String getProductID(String product, String company)
+    {
+        Connection connection = null;
+        String pID = null;
+        try 
+        {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/marketresearchsw",
+                "root", "");
+ 
+            Statement statement;
+            statement = connection.createStatement();
+            ResultSet resultSet;
+            resultSet = statement.executeQuery(
+                "select * from products where name = \"" + product + "\";");
+
+            //System.out.println(resultSet);
+
+            if(resultSet.next()) 
+            {
+                System.out.println("Product Found");
+
+                pID = resultSet.getString("ID");
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        }
+        catch(Exception e)
+        {
+            //something
+        }
+
+        return pID; 
     }
 
     void addProduct()
@@ -76,6 +118,9 @@ class Product
             String command = "insert into products values(\"" + this.pID + "\",\"" + this.name + "\",\"" + this.desc + "\",\"" + this.cID + "\");";
             System.out.println(command);
             statement.executeUpdate(command);
+
+            statement.close();
+            connection.close();
 
         }
         catch(Exception e)

@@ -1,5 +1,8 @@
 package MarketResearchSW;
 
+import java.sql.*;
+import java.util.Random;
+
 class Survey 
 {
     String surveyID;
@@ -16,7 +19,8 @@ class Survey
 
     Survey(String pname, String cname)
     {
-        this.surveyID = pname+cname;
+        Random rand = new Random();
+        this.surveyID = pname+cname+ rand.nextInt(1000);
         this.productName = pname;
         this.companyName = cname;
     }
@@ -53,7 +57,34 @@ class Survey
 
     void updateSurvey()
     {
-        //use current object to update database
+        Connection connection = null;
+
+        try 
+        {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/marketresearchsw",
+                "root", "");
+ 
+            Statement statement;
+            statement = connection.createStatement();
+
+            String pID = Product.getProductID(this.productName, this.companyName);
+            //check if survey exists, if not then add else update
+            //get pID from products table using name and co
+            String command = "insert into survey values(\"" + this.surveyID + "\",\"" + pID + "\",\"" + this.question1 + "\",\"" + this.question2 + "\",\"" + this.question3 + "\");";
+            System.out.println(command);
+            statement.executeUpdate(command);
+
+            statement.close();
+            connection.close();
+
+        }
+        catch(Exception e)
+        {
+            //something
+        }
     }
 
 }

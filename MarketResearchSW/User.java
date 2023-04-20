@@ -1,5 +1,7 @@
 package MarketResearchSW;
 
+import java.sql.ResultSet;
+
 //import java.util.List;
 
 enum Role
@@ -17,24 +19,28 @@ class User
     int accessLevel;
     Role role;
 
-    void viewCompanyCatalogue() //view all products assoc. to a company
+    /*void viewCompanyCatalogue() //view all products assoc. to a company
     {
         errorMsg();
-    }
+    }*/
     
     void viewReport(String product) //view summary report of a particular product based on reviews like avg rating etc
     {
         errorMsg();
     }
     
-    void viewReviews(String product) // view reviews pertaining to a product
+    ResultSet viewReviews(String product) // view reviews pertaining to a product
     {
+        ResultSet x = null;
         errorMsg();
+        return x;
     }
 
-    void viewAllReviews() //view all reviews related to company
+    ResultSet viewAllReviews() //view all reviews related to company
     {
+        ResultSet x = null;
         errorMsg();
+        return x;
     }
 
     void generateReport(Product p, ReportType type, String loc) //ideally return a downloadable report that is then pushed to a database
@@ -62,14 +68,17 @@ class User
     {
         errorMsg();
     }
-    void viewAvailableSurveys()
+    ResultSet viewAvailableSurveys()
     {
+        ResultSet x = null;
         errorMsg();
+        return x;
     }
+    /*
     void viewCatalogue() //check if product in catalogue
     {
         errorMsg();
-    }
+    }*/
     void reviewProduct(String company, String product, String productReview, int rating)
     {
         errorMsg();

@@ -1,5 +1,7 @@
 package MarketResearchSW;
 
+import java.sql.*;
+
 //import java.util.List;
 
 class Customer extends User
@@ -27,24 +29,49 @@ class Customer extends User
     }
 
     @Override
-    void viewAvailableSurveys()
+    ResultSet viewAvailableSurveys()
     {
-        //Connect to database and then 
-    }
+        Connection connection = null;
+        ResultSet resultSet = null;
+        try 
+        {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/marketresearchsw",
+                "root", "");
+ 
+            Statement statement;
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(
+                "select * from survey;");
 
-    @Override
-    void viewCatalogue() //check if product in catalogue
-    {
-        //Catalogue catalogue = new Catalogue(this.company);
-        //display available products ordered by company
-        //return catalogue.products;
+            //System.out.println(resultSet);
+
+            if(!resultSet.next()) 
+            {
+                System.out.println("No Availably Surveys");
+            }
+
+            //System.out.println(resultSet.getString("ID").trim());
+
+            statement.close();
+            connection.close();
+            
+        }
+        catch(Exception e)
+        {
+            //something
+        }
+        
+        return resultSet;
+
     }
 
     @Override
     void reviewProduct(String company, String product, String productReview, int rating)
     {
-        //get product id from product name and company
-        String pID = Product.getProductID(product, company);
+        String pID = "d";
         //get review and rating from user
         Review review = new Review(pID, productReview, rating);
         //put into db

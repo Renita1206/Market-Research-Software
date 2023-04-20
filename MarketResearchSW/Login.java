@@ -50,6 +50,10 @@ class Login
                         company = resultSet.getString("company").trim();
                         acl = resultSet.getInt("accesslevel");
                     }
+                    else
+                    {
+                        role = Role.Customer;
+                    }
                 }
             }
 
