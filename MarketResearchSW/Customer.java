@@ -35,7 +35,7 @@ class Customer extends User
     @Override
     void viewCatalogue() //check if product in catalogue
     {
-        Catalogue catalogue = new Catalogue(this.company);
+        //Catalogue catalogue = new Catalogue(this.company);
         //display available products ordered by company
         //return catalogue.products;
     }

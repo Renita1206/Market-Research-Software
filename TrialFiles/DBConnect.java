@@ -34,7 +34,8 @@ public class DBConnect {
             statement.close();
             connection.close();
         }
-        catch (Exception exception) {
+        catch (Exception exception) 
+        {
             System.out.println(exception);
         }
     } // function ends
