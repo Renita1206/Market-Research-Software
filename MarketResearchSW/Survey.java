@@ -14,7 +14,7 @@ class Survey
 
     Survey(String surveyID)
     {
-        //initialise all variables based on sID
+        //ouh
     }
 
     Survey(String pname, String cname)
