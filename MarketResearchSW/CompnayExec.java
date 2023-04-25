@@ -79,14 +79,14 @@ class CompanyExec extends User
     }
 
     @Override
-    void generateReport(Product p, ReportType type, String loc) //ideally return a downloadable report (that is then pushed to a database?)
+    void generateReport(Product p, ReportType type) //ideally return a downloadable report (that is then pushed to a database?)
     {
         //switch case -> what type of report would you like
         switch(type)
         {
-            case PDF:  ReportGeneratorFacade.generateReport(ReportType.PDF, loc, p);
+            case PDF:  ReportGeneratorFacade.generateReport(ReportType.PDF, p);
                        break;
-            case HTML: ReportGeneratorFacade.generateReport(ReportType.HTML, loc, p);
+            case HTML: ReportGeneratorFacade.generateReport(ReportType.HTML, p);
                        break;
             default: System.out.println("Invalid input");
 

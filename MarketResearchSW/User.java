@@ -33,7 +33,7 @@ class User
         return x;
     }
 
-    void generateReport(Product p, ReportType type, String loc) //ideally return a downloadable report that is then pushed to a database
+    void generateReport(Product p, ReportType type) //ideally return a downloadable report that is then pushed to a database
     {
         errorMsg();
     }

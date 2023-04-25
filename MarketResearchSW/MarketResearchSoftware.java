@@ -26,11 +26,12 @@ class MarketResearchSoftware
             //user.viewCompanyCatalogue();
             //user.reviewProduct("Samsung", "S23", "Pretty cool", 4);
             //user.viewCatalogue();
-            //Product p = Product.getProductDetails("POLKJFG98");
+            Product p = Product.getProductDetails("POLKJFG98");
             //String cmp = Product.getProductCompany("POLKJFG98");
             //System.out.println(p.name + "\t" + p.cID + "\t" + p.desc + " \t" + cmp);
             //user.viewAllReviews();
             //user.viewReviews("POLKJFG98");
+            user.generateReport(p, ReportType.PDF);
         
             switch(user.role)
             {

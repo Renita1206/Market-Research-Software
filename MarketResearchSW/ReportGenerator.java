@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.*;
 
 class ReportGenerator 
 {
@@ -23,7 +24,7 @@ class ReportGenerator
     }
     public void setHeader(String header) 
     {
-      System.out.println("Setting report header");
+      //System.out.println("Setting report header");
       this.header = header;
     }
     public String getData() 
@@ -32,7 +33,7 @@ class ReportGenerator
     }
     public void setData(String data) 
     {
-      System.out.println("Setting report data");
+      //System.out.println("Setting report data");
       this.data = data;
     }
     public String getFooter() 
@@ -41,7 +42,7 @@ class ReportGenerator
     }
     public void setFooter(String footer) 
     {
-      System.out.println("Setting report footer");
+      //System.out.println("Setting report footer");
       this.footer = footer;
     }
 }
@@ -55,7 +56,7 @@ enum ReportType
 class ReportWriter 
 {
      
-    public void writeHtmlReport(ReportGenerator report, String location) 
+    public void writeHtmlReport(ReportGenerator report) 
     {
       System.out.println("HTML Report written");
       //System.out.println(report.getHeader());
@@ -75,7 +76,7 @@ class ReportWriter
             writer.println("<head><title>Report</title></head>");
             writer.println("<body>");
             writer.println("<h3>"+ report.getHeader() + "</h3>");
-            writer.println("<h5>"+ report.getData() + "</h5>");
+            writer.println("<h1>"+ report.getData() + "</h1>");
             writer.println("<h3>"+ report.getFooter() + "</h3>");
             writer.println("</body>");
             writer.println("</html>");
@@ -92,7 +93,7 @@ class ReportWriter
 
     }
      
-    public void writePdfReport(ReportGenerator report, String location) 
+    public void writePdfReport(ReportGenerator report) 
     {
       System.out.println("Pdf Report written");
       //System.out.println(report.getHeader());
@@ -124,7 +125,7 @@ class ReportWriter
    
 class ReportGeneratorFacade 
 {
-    public static void generateReport(ReportType type, String location, Product p) //throws Exception 
+    public static void generateReport(ReportType type, Product p) //throws Exception 
     {
       if(type == null) 
       {
@@ -148,23 +149,57 @@ class ReportGeneratorFacade
       switch(type) 
       {
         case HTML:
-          writer.writeHtmlReport(report, location);
+          writer.writeHtmlReport(report);
           break;
            
         case PDF:
-          writer.writePdfReport(report, location);
+          writer.writePdfReport(report);
           break;
       }
     }
 
     static String generateReportData(String productID)
     {
-        //connect to database and extract out the reviews for given id
-        //last 5 reviews
-        //# of 5, 4, 3...star reviews
-        //best reviews
-        //worst reviews. 
-        //Append each line with \n for breaks
-        return "Data";
+        ResultSet resultSet = null;
+        //retrieve all related products from db
+        Connection connection = null;
+
+        String data = "\n";
+
+        try 
+        {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/marketresearchsw",
+                "root", "");
+ 
+            Statement statement;
+            statement = connection.createStatement();
+
+            String command = "select * from review where pid = \"" + productID + "\";";
+            
+            resultSet = statement.executeQuery(command);
+
+            while(resultSet.next()) 
+            {
+              String review = resultSet.getString("review");
+              int rating = resultSet.getInt("rating");
+
+              data = data + rating + "\t " + review + "\n";
+
+            }
+
+            statement.close();
+            connection.close();
+
+        }
+        catch(Exception e)
+        {
+            //something
+        }
+
+        //System.out.println(data);
+        return data;
     }
   }
