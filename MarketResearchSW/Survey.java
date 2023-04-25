@@ -154,6 +154,37 @@ class SurveyFilled
     void fillSurveyForm(User u)
     {
         //update Survey results db with above parameters
+        String username = u.username;
+
+        Random rand = new Random();
+        String newID = surveyID + username + rand.nextInt(1000);
+
+        Connection connection = null;
+
+        try 
+        {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/marketresearchsw",
+                "root", "");
+ 
+            Statement statement;
+            statement = connection.createStatement();
+
+            String command = "insert into surveyresponse values(\"" + this.surveyID + "\",\"" + newID + "\",\"" + this.answer1 + "\",\"" + this.answer2 + "\",\"" + this.answer3+ "\");";
+            System.out.println(command);
+            statement.executeUpdate(command);
+
+            statement.close();
+            connection.close();
+
+        }
+        catch(Exception e)
+        {
+            //something
+        }
+
     }
 
     void fillAnswer1(String ans)
