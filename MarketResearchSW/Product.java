@@ -61,6 +61,55 @@ class Product
         return p; 
     }
 
+    static String getProductCompany(String pID)
+    {
+        Connection connection = null;
+        String company = "";
+        try 
+        {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/marketresearchsw",
+                "root", "");
+ 
+            Statement statement;
+            statement = connection.createStatement();
+            ResultSet resultSet;
+            resultSet = statement.executeQuery(
+                "select * from products where id = \"" + pID + "\";");
+
+            //System.out.println(resultSet);
+            String cID = "";
+
+            if(resultSet.next()) 
+            {
+                System.out.println("Product Found");
+                
+                cID = resultSet.getString("companyID");
+                //System.out.println("select * from company where id = \"" + cID + "\";");
+                ResultSet resultSet1;
+                resultSet1 = statement.executeQuery(
+                "select * from company where id = \"" + cID + "\";");
+                if(resultSet1.next())
+                    company = resultSet1.getString("name");
+
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        }
+        catch(Exception e)
+        {
+            //something
+        }
+
+        //System.out.println(company);
+
+        return company; 
+    }
+
     static String getProductID(String product, String company)
     {
         Connection connection = null;
@@ -96,6 +145,8 @@ class Product
         {
             //something
         }
+
+        //System.out.println(pID);
 
         return pID; 
     }

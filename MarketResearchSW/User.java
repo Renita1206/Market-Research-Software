@@ -18,18 +18,8 @@ class User
     String company;
     int accessLevel;
     Role role;
-
-    /*void viewCompanyCatalogue() //view all products assoc. to a company
-    {
-        errorMsg();
-    }*/
     
-    void viewReport(String product) //view summary report of a particular product based on reviews like avg rating etc
-    {
-        errorMsg();
-    }
-    
-    ResultSet viewReviews(String product) // view reviews pertaining to a product
+    ResultSet viewReviews(String productID) // view reviews pertaining to a product
     {
         ResultSet x = null;
         errorMsg();
@@ -47,6 +37,7 @@ class User
     {
         errorMsg();
     }
+
     void addProduct(String name, String type, String pID, String company, String cID)
     {
         errorMsg();
@@ -55,6 +46,7 @@ class User
     {
         errorMsg();
     }
+    
     /*void editEmailData()
     {
         errorMsg();
@@ -71,6 +63,13 @@ class User
         return x;
     }
 
+    ResultSet viewCatalogue()
+    {
+        ResultSet x = null;
+        errorMsg();
+        return x;
+    }
+
     void fillSurvey(String surveyID, String a1, String a2, String a3)
     {
         errorMsg();
@@ -81,11 +80,6 @@ class User
         errorMsg();
         return x;
     }
-    /*
-    void viewCatalogue() //check if product in catalogue
-    {
-        errorMsg();
-    }*/
     void reviewProduct(String company, String product, String productReview, int rating)
     {
         errorMsg();

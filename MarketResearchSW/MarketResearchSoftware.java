@@ -24,6 +24,13 @@ class MarketResearchSoftware
             //System.out.println(s.getSurveyQ2());
             //user.fillSurvey("SLKFJG20498R", "Good", "Meh", "IDC");
             //user.viewCompanyCatalogue();
+            //user.reviewProduct("Samsung", "S23", "Pretty cool", 4);
+            //user.viewCatalogue();
+            //Product p = Product.getProductDetails("POLKJFG98");
+            //String cmp = Product.getProductCompany("POLKJFG98");
+            //System.out.println(p.name + "\t" + p.cID + "\t" + p.desc + " \t" + cmp);
+            //user.viewAllReviews();
+            //user.viewReviews("POLKJFG98");
         
             switch(user.role)
             {

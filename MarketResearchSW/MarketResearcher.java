@@ -13,22 +13,6 @@ class MarketResearcher extends User
         this.role = r;
     }
 
-    /*@Override
-    ResultSet viewReviews(String product) // view reviews pertaining to a product
-    {
-        System.out.println("Report for product "  + product + "by company " + this.company);
-        //retrieve all reviews for product from review table
-        //print everything
-    }
-
-    @Override
-    ResultSet viewAllReviews() //view all reviews related to company
-    {
-        System.out.println("Here are all the reviews for company " + this.company);
-        //retrieve all related reviews from review table
-        //print everything
-    }*/
-
     @Override
     void generateReport(Product p, ReportType type, String loc) //ideally return a downloadable report (that is then pushed to a database?)
     {
@@ -156,6 +140,132 @@ class MarketResearcher extends User
                 String desc = resultSet.getString("description");
 
                 System.out.println(pID + "\t" + product + "\t" + desc);
+
+            }
+
+            statement.close();
+            connection.close();
+
+        }
+        catch(Exception e)
+        {
+            //something
+        }
+
+        return resultSet;
+    }
+
+    @Override
+    ResultSet viewAllReviews() //view all products assoc. to a company
+    {
+        ResultSet resultSet = null;
+        //retrieve all related products from db
+        Connection connection = null;
+
+        try 
+        {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/marketresearchsw",
+                "root", "");
+ 
+            Statement statement;
+            statement = connection.createStatement();
+
+            String command = "select * from company where name = \"" + this.company + "\";";
+            
+            resultSet = statement.executeQuery(command);
+
+            //System.out.println(resultSet);
+            String cID = "";
+
+            if(resultSet.next()) 
+            {
+                System.out.println("Company Found");
+                cID = resultSet.getString("ID");
+            }
+
+            //System.out.println(cID);
+
+            command = "select * from review as R where r.PID in (select ID from products where companyID = \"" + cID +"\");";
+            //System.out.println(command);
+            resultSet = statement.executeQuery(command);
+            
+            /*if(resultSet.next()) 
+            {
+                System.out.println("Products Found");
+            }*/
+
+            while(resultSet.next()) 
+            {
+                String review = resultSet.getString("review");
+                int rating = resultSet.getInt("rating");
+
+                System.out.println(rating + "\t" + review);
+
+            }
+
+            statement.close();
+            connection.close();
+
+        }
+        catch(Exception e)
+        {
+            //something
+        }
+
+        return resultSet;
+    }
+
+    @Override
+    ResultSet viewReviews(String productID) // view reviews pertaining to a product
+    {
+        ResultSet resultSet = null;
+        //retrieve all related products from db
+        Connection connection = null;
+
+        try 
+        {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/marketresearchsw",
+                "root", "");
+ 
+            Statement statement;
+            statement = connection.createStatement();
+
+            String command = "select * from company where name = \"" + this.company + "\";";
+            
+            resultSet = statement.executeQuery(command);
+
+            //System.out.println(resultSet);
+            String cID = "";
+
+            if(resultSet.next()) 
+            {
+                System.out.println("Company Found");
+                cID = resultSet.getString("ID");
+            }
+
+            //System.out.println(cID);
+
+            command = "select * from review as R where r.PID in (select ID from products where companyID = \"" + cID +"\") and pid = \"" + productID + "\";";
+            //System.out.println(command);
+            resultSet = statement.executeQuery(command);
+            
+            /*if(resultSet.next()) 
+            {
+                System.out.println("Products Found");
+            }*/
+
+            while(resultSet.next()) 
+            {
+                String review = resultSet.getString("review");
+                int rating = resultSet.getInt("rating");
+
+                System.out.println(rating + "\t" + review);
 
             }
 

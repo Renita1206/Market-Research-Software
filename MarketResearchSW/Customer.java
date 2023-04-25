@@ -71,11 +71,57 @@ class Customer extends User
     @Override
     void reviewProduct(String company, String product, String productReview, int rating)
     {
-        String pID = "d";
+        String pID = Product.getProductID("S23", "Samsung");
         //get review and rating from user
         Review review = new Review(pID, productReview, rating);
+        //System.out.println(review.pID + "\t" + review.rating + "\t" + review.review + "\t" + review.dateOfReview);
         //put into db
         review.addReview(this);
         //get confirmation msg
+    }
+
+    @Override
+    ResultSet viewCatalogue() //view all products assoc. to a company
+    {
+        ResultSet resultSet = null;
+        //retrieve all related products from db
+        Connection connection = null;
+
+        try 
+        {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/marketresearchsw",
+                "root", "");
+ 
+            Statement statement;
+            statement = connection.createStatement();
+
+            String command = "select * from products;";
+            //System.out.println(command);
+            resultSet = statement.executeQuery(command);
+            
+
+            while(resultSet.next()) 
+            {
+                String product = resultSet.getString("name");
+                String pID = resultSet.getString("ID");
+                String desc = resultSet.getString("description");
+
+                System.out.println(pID + "\t" + product + "\t" + desc);
+
+            }
+
+            statement.close();
+            connection.close();
+
+        }
+        catch(Exception e)
+        {
+            //something
+        }
+
+        return resultSet;
     }
 }
