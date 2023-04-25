@@ -64,6 +64,13 @@ class User
         errorMsg();
     }*/
 
+    ResultSet viewCompanyCatalogue()
+    {
+        ResultSet x = null;
+        errorMsg();
+        return x;
+    }
+
     void fillSurvey(String surveyID, String a1, String a2, String a3)
     {
         errorMsg();

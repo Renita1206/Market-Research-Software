@@ -1,5 +1,6 @@
 package MarketResearchSW;
 
+import java.sql.*;
 
 class CompanyExec extends User
 {
@@ -12,11 +13,69 @@ class CompanyExec extends User
         this.role = r;
     }
 
-    void viewCompanyCatalogue() //view all products assoc. to a company
+    @Override
+    ResultSet viewCompanyCatalogue() //view all products assoc. to a company
     {
+        ResultSet resultSet = null;
         System.out.println("Here is the current catalogue of products for company " + this.company);
         //retrieve all related products from db
-        //print everything
+        Connection connection = null;
+
+        try 
+        {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/marketresearchsw",
+                "root", "");
+ 
+            Statement statement;
+            statement = connection.createStatement();
+
+            String command = "select * from company where name = \"" + this.company + "\";";
+            
+            resultSet = statement.executeQuery(command);
+
+            //System.out.println(resultSet);
+            String cID = "";
+
+            if(resultSet.next()) 
+            {
+                System.out.println("Company Found");
+                cID = resultSet.getString("ID");
+            }
+
+            //System.out.println(cID);
+
+            command = "select * from products where companyID = \"" + cID + "\";";
+            //System.out.println(command);
+            resultSet = statement.executeQuery(command);
+            
+            /*if(resultSet.next()) 
+            {
+                System.out.println("Products Found");
+            }*/
+
+            while(resultSet.next()) 
+            {
+                String product = resultSet.getString("name");
+                String pID = resultSet.getString("ID");
+                String desc = resultSet.getString("description");
+
+                System.out.println(pID + "\t" + product + "\t" + desc);
+
+            }
+
+            statement.close();
+            connection.close();
+
+        }
+        catch(Exception e)
+        {
+            //something
+        }
+
+        return resultSet;
     }
 
     @Override

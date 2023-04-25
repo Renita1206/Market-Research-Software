@@ -11,7 +11,7 @@ class MarketResearchSoftware
         System.out.println("Welcome to Market Research Software");
         Login loginobj = new Login();
         //input username and password
-        User user = loginobj.login("Riya", "1234");
+        User user = loginobj.login("Renita Kurian", "Password");
         while(loginobj.logged_in) //that user can do whatever he is allowed to as long as they are logged in
         {
             //System.out.println(user.username + " " + user.company);
@@ -22,7 +22,8 @@ class MarketResearchSoftware
             //user.createSurvey("S23", user.company, "sdf", "sfgsfgd", "asfg");
             //Survey s = new Survey("SLKFJG20498R");
             //System.out.println(s.getSurveyQ2());
-            user.fillSurvey("SLKFJG20498R", "Good", "Meh", "IDC");
+            //user.fillSurvey("SLKFJG20498R", "Good", "Meh", "IDC");
+            //user.viewCompanyCatalogue();
         
             switch(user.role)
             {
