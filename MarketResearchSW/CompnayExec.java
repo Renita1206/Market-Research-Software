@@ -12,7 +12,6 @@ class CompanyExec extends User
         this.role = r;
     }
 
-    @Override
     void viewCompanyCatalogue() //view all products assoc. to a company
     {
         System.out.println("Here is the current catalogue of products for company " + this.company);
@@ -37,7 +36,7 @@ class CompanyExec extends User
         System.out.println("Report has been generated");
         
     }
-
+/* 
     @Override
     void viewReviews(String product) // view reviews pertaining to a product
     {
@@ -52,6 +51,6 @@ class CompanyExec extends User
         System.out.println("Here are all the reviews for company " + this.company);
         //retrieve all related reviews from review table
         //print everything
-    }
+    }*/
 }
 

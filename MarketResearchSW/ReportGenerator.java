@@ -136,7 +136,7 @@ class ReportGeneratorFacade
       ReportGenerator report = new ReportGenerator();
  
       report.setHeader(p.name + " Report");
-      report.setFooter("Generated for " + p.company + " at time " + (new Date().toString()));
+      report.setFooter("Generated at time " + (new Date().toString()));
        
       //Get data from dataSource and set to String object
        

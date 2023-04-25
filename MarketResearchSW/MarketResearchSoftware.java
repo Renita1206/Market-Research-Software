@@ -20,6 +20,8 @@ class MarketResearchSoftware
             //P.addProduct();
             //user.viewAvailableSurveys();
             //user.createSurvey("S23", user.company, "sdf", "sfgsfgd", "asfg");
+            //Survey s = new Survey("SLKFJG20498R");
+            //System.out.println(s.getSurveyQ2());
         
             switch(user.role)
             {

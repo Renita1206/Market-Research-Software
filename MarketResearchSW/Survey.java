@@ -14,7 +14,54 @@ class Survey
 
     Survey(String surveyID)
     {
-        //ouh
+        Connection connection = null;
+
+        try 
+        {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/marketresearchsw",
+                "root", "");
+ 
+            Statement statement;
+            statement = connection.createStatement();
+
+            String command = "select * from survey where id = \"" + surveyID + "\";";
+            
+            ResultSet resultSet;
+            resultSet = statement.executeQuery(command);
+
+            //System.out.println(resultSet);
+
+            if(resultSet.next()) 
+            {
+                System.out.println("Survey Found");
+
+                String q1 = resultSet.getString("q1");
+                String q2 = resultSet.getString("q2");
+                String q3 = resultSet.getString("q3");
+                
+                this.surveyID = surveyID;
+                this.question1 = q1;
+                this.question2 = q2;
+                this.question3 = q3;
+                this.companyName = "NA"; //change later if needed
+                this.productName = "NA"; //change later if needed
+                
+            }
+
+            resultSet.close();
+            
+
+            statement.close();
+            connection.close();
+
+        }
+        catch(Exception e)
+        {
+            //something
+        }
     }
 
     Survey(String pname, String cname)

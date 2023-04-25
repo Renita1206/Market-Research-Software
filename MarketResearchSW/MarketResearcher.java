@@ -13,7 +13,7 @@ class MarketResearcher extends User
         this.role = r;
     }
 
-    @Override
+    /*@Override
     ResultSet viewReviews(String product) // view reviews pertaining to a product
     {
         System.out.println("Report for product "  + product + "by company " + this.company);
@@ -27,7 +27,7 @@ class MarketResearcher extends User
         System.out.println("Here are all the reviews for company " + this.company);
         //retrieve all related reviews from review table
         //print everything
-    }
+    }*/
 
     @Override
     void generateReport(Product p, ReportType type, String loc) //ideally return a downloadable report (that is then pushed to a database?)
