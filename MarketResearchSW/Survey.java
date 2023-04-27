@@ -33,7 +33,6 @@ class Survey implements Cloneable
             resultSet = statement.executeQuery(command);
 
             String pID = "";
-            String cID = "";
 
             //System.out.println(resultSet);
 
