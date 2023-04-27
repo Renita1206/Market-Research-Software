@@ -29,7 +29,7 @@ class MarketResearchSoftware
         
         while(loginobj.logged_in) //that user can do whatever he is allowed to as long as they are logged in
         {
-            System.out.println(user.username + " " + user.company);
+            //System.out.println(user.username + " " + user.company);
             // Product P = new Product("Crutches", "Provides support to those who need it", "SLIFGH9876KJ", "LO2F03N4");
             // System.out.println(Product.getProductID("S23", "Samsung"));
             // P.addProduct();

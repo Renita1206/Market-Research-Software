@@ -50,7 +50,7 @@ class Login
                         company = resultSet.getString("company").trim();
                         acl = resultSet.getInt("accesslevel");
                     }
-                    if(r.equals("Company Executive"))
+                    else if(r.equals("Company Executive"))
                     {
                         role = Role.CompanyExecutive;
                         company = resultSet.getString("company").trim();
