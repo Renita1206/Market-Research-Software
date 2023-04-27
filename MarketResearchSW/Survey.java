@@ -3,7 +3,7 @@ package MarketResearchSW;
 import java.sql.*;
 import java.util.Random;
 
-class Survey 
+class Survey implements Cloneable
 {
     String surveyID;
     String productName;
@@ -32,6 +32,9 @@ class Survey
             ResultSet resultSet;
             resultSet = statement.executeQuery(command);
 
+            String pID = "";
+            String cID = "";
+
             //System.out.println(resultSet);
 
             if(resultSet.next()) 
@@ -41,13 +44,16 @@ class Survey
                 String q1 = resultSet.getString("q1");
                 String q2 = resultSet.getString("q2");
                 String q3 = resultSet.getString("q3");
+                pID = resultSet.getString("productID");
+
+                
                 
                 this.surveyID = surveyID;
                 this.question1 = q1;
                 this.question2 = q2;
                 this.question3 = q3;
-                this.companyName = "NA"; //change later if needed
-                this.productName = "NA"; //change later if needed
+                this.companyName = Product.getProductCompany(pID);
+                this.productName = Product.getProductDetails(pID).name;
                 
             }
 
@@ -102,7 +108,7 @@ class Survey
         this.question3 = q3;
     }
 
-    void updateSurvey()
+    void addSurvey()
     {
         Connection connection = null;
 
@@ -133,6 +139,13 @@ class Survey
             //something
         }
     }
+
+    @Override
+	public Object clone() throws CloneNotSupportedException
+	{
+			String sID = this.surveyID;
+			return new Survey(sID);
+	}
 
 }
 

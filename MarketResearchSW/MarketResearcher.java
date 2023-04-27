@@ -46,7 +46,7 @@ class MarketResearcher extends User
         survey.setSurveyQ2(q2);
         survey.setSurveyQ3(q3);
         // add survey to dbString surveyID;
-        survey.updateSurvey();
+        survey.addSurvey();
     }
 
     @Override
