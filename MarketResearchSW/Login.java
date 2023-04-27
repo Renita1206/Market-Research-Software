@@ -44,9 +44,15 @@ class Login
                     System.out.println("Logged in");
                     this.logged_in = true;
                     String r = resultSet.getString("role").trim();
-                    if(r.equals("Market Researcher") || r.equals("Company Executive"))
+                    if(r.equals("Market Researcher"))
                     {
                         role = Role.MarketResearcher;
+                        company = resultSet.getString("company").trim();
+                        acl = resultSet.getInt("accesslevel");
+                    }
+                    if(r.equals("Company Executive"))
+                    {
+                        role = Role.CompanyExecutive;
                         company = resultSet.getString("company").trim();
                         acl = resultSet.getInt("accesslevel");
                     }
