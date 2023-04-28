@@ -27,7 +27,7 @@ class MarketResearcher extends User
 
         }
 
-        System.out.println("Report has been generated");
+        // System.out.println("Report has been generated");
         
     }
 
@@ -69,11 +69,30 @@ class MarketResearcher extends User
 
             //System.out.println(resultSet);
 
-            if(!resultSet.next()) 
+            int flag = 0;
+
+            while(resultSet.next()) 
             {
-                System.out.println("No Availably Surveys");
+                flag = 1;
+                String id = resultSet.getString("ID");
+                String pid = resultSet.getString("productid");
+                String q1 = resultSet.getString("q1");
+                String q2 = resultSet.getString("q2");
+                String q3 = resultSet.getString("q3");
+                System.out.println("--------------------- "+ id +" ----------------------");
+                System.out.println("Product ID: " + pid);
+                System.out.println("Question 1: " + q1);
+                System.out.println("Question 2: " + q2);
+                System.out.println("Question 3: " + q3);
+                System.out.println("----------------------------------------------------");
+
+
             }
 
+            if(flag==0)
+            {
+                System.out.println("No surveys available");
+            }
             //System.out.println(resultSet.getString("ID").trim());
 
             statement.close();
@@ -82,7 +101,7 @@ class MarketResearcher extends User
         }
         catch(Exception e)
         {
-            //something
+            System.out.println("Issue accessing Survey Database");
         }
         
         return resultSet;
@@ -118,7 +137,7 @@ class MarketResearcher extends User
 
             if(resultSet.next()) 
             {
-                System.out.println("Company Found");
+                //System.out.println("Company Found");
                 cID = resultSet.getString("ID");
             }
 
@@ -149,7 +168,7 @@ class MarketResearcher extends User
         }
         catch(Exception e)
         {
-            //something
+            System.out.println("There was an issue while retrieving catalogue");
         }
 
         return resultSet;
@@ -182,7 +201,7 @@ class MarketResearcher extends User
 
             if(resultSet.next()) 
             {
-                System.out.println("Company Found");
+                // System.out.println("Company Found");
                 cID = resultSet.getString("ID");
             }
 
@@ -197,12 +216,14 @@ class MarketResearcher extends User
                 System.out.println("Products Found");
             }*/
 
+            System.out.println("Product\tRating\tReview");
             while(resultSet.next()) 
             {
                 String review = resultSet.getString("review");
                 int rating = resultSet.getInt("rating");
-
-                System.out.println(rating + "\t" + review);
+                String temp = resultSet.getString("PID");
+                Product p = Product.getProductDetails(temp);
+                System.out.println(p.name + "\t" + rating + "\t" + review);
 
             }
 
@@ -212,7 +233,7 @@ class MarketResearcher extends User
         }
         catch(Exception e)
         {
-            //something
+            System.out.println("There was an issue while retrieving reviews");
         }
 
         return resultSet;
@@ -245,7 +266,7 @@ class MarketResearcher extends User
 
             if(resultSet.next()) 
             {
-                System.out.println("Company Found");
+                // System.out.println("Company Found");
                 cID = resultSet.getString("ID");
             }
 
@@ -259,12 +280,11 @@ class MarketResearcher extends User
             {
                 System.out.println("Products Found");
             }*/
-
+            System.out.println("Rating\tReview");
             while(resultSet.next()) 
             {
                 String review = resultSet.getString("review");
                 int rating = resultSet.getInt("rating");
-
                 System.out.println(rating + "\t" + review);
 
             }
@@ -275,7 +295,7 @@ class MarketResearcher extends User
         }
         catch(Exception e)
         {
-            //something
+            System.out.println("There was an issue while retrieving reviews");
         }
 
         return resultSet;

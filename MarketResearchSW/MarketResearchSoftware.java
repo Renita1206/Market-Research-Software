@@ -17,19 +17,19 @@ class MarketResearchSoftware
         System.out.print("Username: ");
         String userName = sc.nextLine();
         System.out.print("Password: ");
-        String passWord= sc.nextLine();
+        String passWord= sc.next();
 
         // Creating Login Model
         Login loginobj = new Login();
         
         // Creating User
         User user = loginobj.login(userName, passWord);
-
+        // System.out.println(user.username + " " + user.company);
         // System.out.println(user.username + " " + user.company);
         
         while(loginobj.logged_in) //that user can do whatever he is allowed to as long as they are logged in
         {
-            //System.out.println(user.username + " " + user.company);
+            
             // Product P = new Product("Crutches", "Provides support to those who need it", "SLIFGH9876KJ", "LO2F03N4");
             // System.out.println(Product.getProductID("S23", "Samsung"));
             // P.addProduct();
@@ -51,11 +51,12 @@ class MarketResearchSoftware
             switch(user.role)
             {
                 case CompanyExecutive: //display company exec page
-                    System.out.println("*** ROLE: Company Executive ***");
+                    System.out.println("\n*** ROLE: Company Executive ***");
                     System.out.println("1. View Company Catalogue");
                     System.out.println("2. Generate Report");
                     System.out.println("3. View Product Review");
                     System.out.println("4. View All Reviews");
+                    System.out.println("5. Logout");
                     System.out.print("Enter CHOICE: ");
 
                     num = sc.nextInt();
@@ -67,10 +68,12 @@ class MarketResearchSoftware
                             break;
                         case 2:
                             System.out.print("Enter Product ID: ");
-                            pID = sc.nextLine();
+                            pID = sc.next();
+                            
                             p = Product.getProductDetails(pID);
+                            
                             System.out.print("Enter Report Format (PDF/HTML): ");
-                            type = sc.nextLine();
+                            type = sc.next();
                             if (type.equals("PDF"))
                                 user.generateReport(p, ReportType.PDF);
                             else if(type.equals("HTML"))
@@ -83,11 +86,14 @@ class MarketResearchSoftware
                             break;
                         case 3:
                             System.out.print("Enter Product ID: ");
-                            id = sc.nextLine();
+                            id = sc.next();
                             user.viewReviews(id);
                             break;
                         case 4:
                             user.viewAllReviews();
+                            break;
+                        case 5:
+                            loginobj.logout();
                             break;
                         default:
                             System.out.println("Invalid Choice");
@@ -96,7 +102,7 @@ class MarketResearchSoftware
                     break;
 
                 case MarketResearcher: //display market researcher page
-                    System.out.println("*** ROLE: Market Researcher ***");
+                    System.out.println("\n\n*** ROLE: Market Researcher ***");
                     System.out.println("1. Generate Report");
                     System.out.println("2. Add Product");
                     System.out.println("3. Create Survey");
@@ -104,7 +110,7 @@ class MarketResearchSoftware
                     System.out.println("5. View Company Catalogue");
                     System.out.println("6. View Product Review");
                     System.out.println("7. View All Reviews");
-                    
+                    System.out.println("8. Logout");
                     System.out.print("Enter CHOICE: ");
 
                     num = sc.nextInt();
@@ -113,10 +119,10 @@ class MarketResearchSoftware
                     {
                         case 1:
                             System.out.print("Enter Product ID: ");
-                            pID = sc.nextLine();
+                            pID = sc.next();
                             p = Product.getProductDetails(pID);
                             System.out.print("Enter Report Format (PDF/HTML): ");
-                            type = sc.nextLine();
+                            type = sc.next();
                             if (type.equals("PDF"))
                                 user.generateReport(p, ReportType.PDF);
                             else if(type.equals("HTML"))
@@ -129,21 +135,23 @@ class MarketResearchSoftware
                             break;
                         case 2:
                             System.out.print("Enter Product name: ");
-                            name = sc.nextLine();
-                            System.out.print("Enter Type of Product: ");
+                            name = sc.next();
+                            System.out.print("Enter Product Description: ");
+                            type = sc.nextLine();
                             type = sc.nextLine();
                             System.out.print("Enter Product ID: ");
-                            pID = sc.nextLine();
+                            pID = sc.next();
                             company = user.company;
                             System.out.print("Enter Company ID ");
-                            cID = sc.nextLine();
+                            cID = sc.next();
                             user.addProduct(name, type, pID, company, cID);
                             break;
                         case 3:
                             System.out.print("Enter Product name: ");
-                            pname = sc.nextLine();
+                            pname = sc.next();
                             cname = user.company;
                             System.out.println("Enter First Question");
+                            q1 = sc.nextLine();
                             q1 = sc.nextLine();
                             System.out.println("Enter Second Question");
                             q2 = sc.nextLine();
@@ -159,11 +167,14 @@ class MarketResearchSoftware
                             break;
                         case 6:
                             System.out.print("Enter Product ID: ");
-                            pID = sc.nextLine();
+                            pID = sc.next();
                             user.viewReviews(pID);
                             break;
                         case 7:
                             user.viewAllReviews();
+                            break;
+                        case 8:
+                            loginobj.logout();
                             break;
                         default:
                             System.out.println("Invalid Choice");
@@ -172,26 +183,51 @@ class MarketResearchSoftware
                     break;
 
                 case Customer:         //display customer page
-                    System.out.println("ROLE: Customer");
+                    System.out.println("\n\nROLE: Customer");
                     System.out.println("1. Fill Survey");
                     System.out.println("2. View Available Survey");
                     System.out.println("3. Review product");
                     System.out.println("4. View Catalogue");
-                    
+                    System.out.println("5. Logout");
                     System.out.print("Enter CHOICE: ");
 
                     num = sc.nextInt();
 
                     switch(num)
                     {
-                        case 1:
+                        case 1://user.fillSurvey("SLKFJG20498R", "Good", "Meh", "IDC");
+                            System.out.println("Enter the surveyID: ");
+                            String sid = sc.nextLine();
+                            sid = sc.nextLine();
+                            Survey s = new Survey(sid);
+                            System.out.println(s.getSurveyQ1());
+                            String a1 = sc.nextLine();
+                            System.out.println(s.getSurveyQ2());
+                            String a2 = sc.nextLine();
+                            System.out.println(s.getSurveyQ3());
+                            String a3 = sc.nextLine();
+                            user.fillSurvey(sid, a1, a2, a3);
                             break;
-                        case 2:
-                            break;
-                        case 3:
-                            break;
+                        case 2: user.viewAvailableSurveys(); 
+                        break;
+                        case 3://user.reviewProduct("Samsung", "S23", "Pretty cool", 4);
+                        System.out.println("Enter the name of the product: ");
+                        String p1name = sc.nextLine();
+                        p1name = sc.nextLine();
+                        System.out.println("Enter the name of the company: ");
+                        String c1name = sc.nextLine();
+                        System.out.println("Enter your rating of the product: ");
+                        int rating = sc.nextInt();
+                        System.out.println("Enter your review for the product ");
+                        String rev = sc.nextLine();
+                        rev = sc.nextLine();
+                        user.reviewProduct(c1name, p1name, rev, rating);
+                        break;
                         case 4:
                             user.viewCatalogue();
+                            break;
+                        case 5:
+                            loginobj.logout();
                             break;
                         default:
                             System.out.println("Invalid Choice");
@@ -203,7 +239,6 @@ class MarketResearchSoftware
                     break;
             }
 
-            loginobj.logout();
         }
 
         sc.close();

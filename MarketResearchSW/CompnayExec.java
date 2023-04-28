@@ -17,7 +17,7 @@ class CompanyExec extends User
     ResultSet viewCompanyCatalogue() //view all products assoc. to a company
     {
         ResultSet resultSet = null;
-        System.out.println("Here is the current catalogue of products for company " + this.company);
+        System.out.println("\nHere is the current catalogue of products for company " + this.company+ " \n");
         //retrieve all related products from db
         Connection connection = null;
 
@@ -41,7 +41,7 @@ class CompanyExec extends User
 
             if(resultSet.next()) 
             {
-                System.out.println("Company Found");
+                // System.out.println("Company Found");
                 cID = resultSet.getString("ID");
             }
 
@@ -63,6 +63,7 @@ class CompanyExec extends User
                 String desc = resultSet.getString("description");
 
                 System.out.println(pID + "\t" + product + "\t" + desc);
+                
 
             }
 
@@ -72,7 +73,7 @@ class CompanyExec extends User
         }
         catch(Exception e)
         {
-            //something
+            System.out.println("Operation not supported by Database");
         }
 
         return resultSet;
@@ -92,7 +93,7 @@ class CompanyExec extends User
 
         }
 
-        System.out.println("Report has been generated");
+        // System.out.println("Report has been generated");
         
     }
 
@@ -123,7 +124,7 @@ class CompanyExec extends User
 
             if(resultSet.next()) 
             {
-                System.out.println("Company Found");
+                // System.out.println("Company Found");
                 cID = resultSet.getString("ID");
             }
 
@@ -138,12 +139,14 @@ class CompanyExec extends User
                 System.out.println("Products Found");
             }*/
 
+            System.out.println("Product\tRating\tReview");
             while(resultSet.next()) 
             {
                 String review = resultSet.getString("review");
                 int rating = resultSet.getInt("rating");
-
-                System.out.println(rating + "\t" + review);
+                String temp = resultSet.getString("PID");
+                Product p = Product.getProductDetails(temp);
+                System.out.println(p.name + "\t" + rating + "\t" + review);
 
             }
 
@@ -153,7 +156,7 @@ class CompanyExec extends User
         }
         catch(Exception e)
         {
-            //something
+            System.out.println("There was an issue while retrieving reviews");
         }
 
         return resultSet;
@@ -186,7 +189,7 @@ class CompanyExec extends User
 
             if(resultSet.next()) 
             {
-                System.out.println("Company Found");
+                // System.out.println("Company Found");
                 cID = resultSet.getString("ID");
             }
 
@@ -200,12 +203,11 @@ class CompanyExec extends User
             {
                 System.out.println("Products Found");
             }*/
-
+            System.out.println("Rating\tReview");
             while(resultSet.next()) 
             {
                 String review = resultSet.getString("review");
                 int rating = resultSet.getInt("rating");
-
                 System.out.println(rating + "\t" + review);
 
             }
@@ -216,10 +218,9 @@ class CompanyExec extends User
         }
         catch(Exception e)
         {
-            //something
+            System.out.println("There was an issue while retrieving reviews");
         }
 
         return resultSet;
     }
 }
-

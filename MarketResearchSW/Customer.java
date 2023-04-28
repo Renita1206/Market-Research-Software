@@ -23,6 +23,7 @@ class Customer extends User
        answers.fillAnswer2(a2);
        answers.fillAnswer3(a3);
        //put answers back in db
+       //System.out.println(answers.answer1);
        answers.fillSurveyForm(this);
        //confirmation msg
        System.out.println("Survey has been filled");
@@ -48,11 +49,31 @@ class Customer extends User
 
             //System.out.println(resultSet);
 
-            if(!resultSet.next()) 
+            int flag = 0;
+
+            while(resultSet.next()) 
             {
-                System.out.println("No Availably Surveys");
+                flag = 1;
+                String id = resultSet.getString("ID");
+                String pid = resultSet.getString("productid");
+                String q1 = resultSet.getString("q1");
+                String q2 = resultSet.getString("q2");
+                String q3 = resultSet.getString("q3");
+                String pname = Product.getProductDetails(pid).name;
+                System.out.println("--------------------- "+ id +" ----------------------");
+                System.out.println("Product: " + pname);
+                System.out.println("Question 1: " + q1);
+                System.out.println("Question 2: " + q2);
+                System.out.println("Question 3: " + q3);
+                System.out.println("----------------------------------------------------");
+
+
             }
 
+            if(flag==0)
+            {
+                System.out.println("No surveys available");
+            }
             //System.out.println(resultSet.getString("ID").trim());
 
             statement.close();
@@ -61,7 +82,7 @@ class Customer extends User
         }
         catch(Exception e)
         {
-            //something
+            System.out.println("Sorry, there was issue in retrieving survey records");
         }
         
         return resultSet;
@@ -71,7 +92,7 @@ class Customer extends User
     @Override
     void reviewProduct(String company, String product, String productReview, int rating)
     {
-        String pID = Product.getProductID("S23", "Samsung");
+        String pID = Product.getProductID(product, company);
         //get review and rating from user
         Review review = new Review(pID, productReview, rating);
         //System.out.println(review.pID + "\t" + review.rating + "\t" + review.review + "\t" + review.dateOfReview);
@@ -109,7 +130,9 @@ class Customer extends User
                 String pID = resultSet.getString("ID");
                 String desc = resultSet.getString("description");
 
-                System.out.println(pID + "\t" + product + "\t" + desc);
+                String c = Product.getProductCompany(pID);
+
+                System.out.println(c + "\t" + product + "\t" + desc);
 
             }
 
@@ -119,7 +142,7 @@ class Customer extends User
         }
         catch(Exception e)
         {
-            //something
+            System.out.println("There was an issue retrieving catalogue");
         }
 
         return resultSet;

@@ -65,7 +65,7 @@ class Survey implements Cloneable
         }
         catch(Exception e)
         {
-            //something
+            System.out.println("There was an issue initialising survey");
         }
     }
 
@@ -126,7 +126,7 @@ class Survey implements Cloneable
             //check if survey exists, if not then add else update
             //get pID from products table using name and co
             String command = "insert into survey values(\"" + this.surveyID + "\",\"" + pID + "\",\"" + this.question1 + "\",\"" + this.question2 + "\",\"" + this.question3 + "\");";
-            System.out.println(command);
+            //System.out.println(command);
             statement.executeUpdate(command);
 
             statement.close();
@@ -135,7 +135,7 @@ class Survey implements Cloneable
         }
         catch(Exception e)
         {
-            //something
+            System.out.println("There was an issue adding survey to database");
         }
     }
 
@@ -185,7 +185,7 @@ class SurveyFilled
             statement = connection.createStatement();
 
             String command = "insert into surveyresponse values(\"" + this.surveyID + "\",\"" + newID + "\",\"" + this.answer1 + "\",\"" + this.answer2 + "\",\"" + this.answer3+ "\");";
-            System.out.println(command);
+            //System.out.println(command);
             statement.executeUpdate(command);
 
             statement.close();
@@ -194,7 +194,7 @@ class SurveyFilled
         }
         catch(Exception e)
         {
-            //something
+            System.out.println("There was an issue filling survey");
         }
 
     }

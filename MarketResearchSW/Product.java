@@ -39,7 +39,7 @@ class Product
 
             if(resultSet.next()) 
             {
-                System.out.println("Product Found");
+                // System.out.println("Product Found");
 
                 String name = resultSet.getString("name");
                 String desc = resultSet.getString("description");
@@ -56,6 +56,7 @@ class Product
         catch(Exception e)
         {
             //something
+            System.out.println("Product not Found");
         }
 
         return p; 
@@ -84,7 +85,7 @@ class Product
 
             if(resultSet.next()) 
             {
-                System.out.println("Product Found");
+                // System.out.println("Product Found");
                 
                 cID = resultSet.getString("companyID");
                 //System.out.println("select * from company where id = \"" + cID + "\";");
@@ -103,6 +104,7 @@ class Product
         catch(Exception e)
         {
             //something
+            System.out.println("Not able to find Company for the given Product");
         }
 
         //System.out.println(company);
@@ -132,7 +134,7 @@ class Product
 
             if(resultSet.next()) 
             {
-                System.out.println("Product Found");
+                // System.out.println("Product Found");
 
                 pID = resultSet.getString("ID");
             }
@@ -144,6 +146,7 @@ class Product
         catch(Exception e)
         {
             //something
+            System.out.println("Product Not Found");
         }
 
         //System.out.println(pID);
@@ -167,7 +170,7 @@ class Product
             statement = connection.createStatement();
 
             String command = "insert into products values(\"" + this.pID + "\",\"" + this.name + "\",\"" + this.desc + "\",\"" + this.cID + "\");";
-            System.out.println(command);
+            // System.out.println(command);
             statement.executeUpdate(command);
 
             statement.close();
@@ -177,6 +180,7 @@ class Product
         catch(Exception e)
         {
             //something
+            System.out.println("Unable to insert in product database");
         }
     }
 }
